@@ -15,10 +15,12 @@
         </div>
         <div class="main">
             <div class="controls">
-                <button>New Book</button>
-                <button disabled>Save MyLibrary</button>
+                <button class="new-book">New Book</button>
+                <!--<button>Save MyLibrary</button>-->
             </div>
-            <div class="form"></div>
+            <div class="form-container">
+                <form onsubmit="return addBookToLibrary()" id="theForm"></form>
+            </div>
             <div class="data"></div>
             <div class="lib"></div>
         </div>
