@@ -1,9 +1,11 @@
 let myLibrary = []; 
+let numCards = 0;
 
 function Book() {
     this.title = document.getElementById("bookTitle").value;
     this.author = document.getElementById("bookAuthor").value;
     this.pages = document.getElementById("numberPages").value;
+    this.num = numCards;
     //this.read = document.getElementById("read").value;
 }
 
@@ -11,6 +13,10 @@ function addBookToLibrary() {
     let myBook = new Book();
     myLibrary.push(myBook);
     createBookCard();
+    numCards++;
+    const theForm = document.getElementById("theForm");
+    const bookForm = document.querySelector(".form");
+    theForm.removeChild(bookForm);
     return false;
 }
 
@@ -36,6 +42,7 @@ function callForm() {
         lblTitle.setAttribute("for", "bookTitle");
         lblTitle.innerHTML = "Title";
         const inTitle = document.createElement("input");
+        inTitle.setAttribute("maxlength", "13");
         inTitle.setAttribute("type", "text");
         inTitle.setAttribute("id", "bookTitle");
         inTitle.setAttribute("name", "book-name");
@@ -49,6 +56,7 @@ function callForm() {
         lblAuthor.innerHTML = "Author";
         const inAuthor = document.createElement("input");
         inAuthor.setAttribute("type", "text");
+        inAuthor.setAttribute("maxlength", "13");
         inAuthor.setAttribute("id", "bookAuthor");
         inAuthor.setAttribute("name", "book-author");
         inAuthor.setAttribute("required", "true");
@@ -111,12 +119,57 @@ function callForm() {
 }
 
 function createBookCard() {
-    for(let book of myLibrary) {
-        console.log(book);
-    }
+    console.log(myLibrary[numCards]);
+    //library
+    const lib = document.querySelector(".library");
+    //book card
+    const bookCard = document.createElement("div");
+    bookCard.classList.add("bookCard");
+    //book label
+    const bookLabel = document.createElement("div");
+    bookLabel.classList.add("book-label");
+    //title
+    const cardTitle = document.createElement("p");
+    cardTitle.innerHTML = myLibrary[numCards].title;
+    //author
+    const cardAuthor = document.createElement("p");
+    cardAuthor.classList.add("hidden");
+    cardAuthor.innerHTML = "Author: " + myLibrary[numCards].author;
+    //pages
+    const cardPages = document.createElement("p");
+    cardPages.classList.add("hidden");
+    cardPages.innerHTML = myLibrary[numCards].pages + " pages";
+
+    //append
+    bookLabel.appendChild(cardTitle);
+    bookLabel.appendChild(cardAuthor);
+    bookLabel.appendChild(cardPages);
+    bookCard.appendChild(bookLabel);
+    lib.appendChild(bookCard);
+    spyBook();
+    stopSpyBook();
 }
 
+function spyBook() {
+    const aBook = document.querySelectorAll(".bookCard");
+    aBook.forEach((book) => {
+        book.addEventListener("mouseover", () => {
+            book.classList.add("spy");
+        })
+    })
+}
 
+function stopSpyBook() {
+    const aBook = document.querySelectorAll(".bookCard");
+    aBook.forEach((book) => {
+        book.addEventListener("mouseout", () => {
+            book.classList.remove("spy");
+        })
+    })
+}
+
+stopSpyBook();
+spyBook();
 callForm();
 //addBookToLibrary();
 //console.log(myLibrary);
