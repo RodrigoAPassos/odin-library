@@ -181,7 +181,7 @@ body {
     background-color: black;
     border: 1px solid goldenrod;
     border-radius: 6px;
-    margin: 10px;
+    margin: 5px;
 }
 
 .bookCard {
@@ -204,7 +204,7 @@ body {
 .spy {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     background-image: url(./resources/book.png);
     background-color: #7d4e2d;
@@ -222,6 +222,24 @@ body {
 
 .bookCard p.hidden {
     display: none;
+}
+
+.del-book {
+    background-image: url(./resources/delete_FILL0_wght400_GRAD0_opsz48.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    width: 48px;
+    height: 48px;
+    background-color: transparent;
+    border-radius: 8px;
+}
+
+.bookCard button.hidden {
+    display: none;
+}
+
+.spy button.hidden {
+    display: block;
 }
 
 .spy p.hidden {

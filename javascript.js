@@ -2,11 +2,16 @@ let myLibrary = [];
 let numCards = 0;
 
 function Book() {
+    let bookRead = "";
+    if(document.getElementById("read").checked == false) {
+        bookRead = "Unread";
+    }else bookRead = "Read";
+    
     this.title = document.getElementById("bookTitle").value;
     this.author = document.getElementById("bookAuthor").value;
     this.pages = document.getElementById("numberPages").value;
     this.num = numCards;
-    //this.read = document.getElementById("read").value;
+    this.read = bookRead;
 }
 
 function addBookToLibrary() {
@@ -74,7 +79,7 @@ function callForm() {
         inPages.setAttribute("required", "true");
 
         //Book others entry
-        /*const others = document.createElement("div");
+        const others = document.createElement("div");
         others.classList.add("others");
         const readC = document.createElement("div");
         readC.classList.add("read-check");
@@ -84,8 +89,8 @@ function callForm() {
         const inRead = document.createElement("input");
         inRead.setAttribute("type", "checkbox");
         inRead.setAttribute("id", "read");
-        inRead.setAttribute("value", "true");
-        inRead.setAttribute("name", "read");*/
+        inRead.setAttribute("value", "check");
+        inRead.setAttribute("name", "read");
 
         //Book submit button
         const addButton = document.createElement("div");
@@ -106,10 +111,10 @@ function callForm() {
         numPages.appendChild(lblNumP);
         numPages.appendChild(inPages);
         bookForm.appendChild(numPages);
-        /*readC.appendChild(lblOthers);
+        readC.appendChild(lblOthers);
         readC.appendChild(inRead);
         others.appendChild(readC);
-        bookForm.appendChild(others);*/
+        bookForm.appendChild(others);
         addButton.appendChild(addbtn);
         bookForm.appendChild(addButton);
         theForm.appendChild(bookForm);
@@ -125,9 +130,16 @@ function createBookCard() {
     //book card
     const bookCard = document.createElement("div");
     bookCard.classList.add("bookCard");
+    bookCard.setAttribute("value", myLibrary[numCards].num);
     //book label
     const bookLabel = document.createElement("div");
     bookLabel.classList.add("book-label");
+    //book delete
+    const delBook = document.createElement("button");
+    delBook.classList.add("del-book");
+    delBook.setAttribute("value", numCards);
+    delBook.setAttribute("onclick", "deleteBook(value)")
+    delBook.classList.add("hidden");
     //title
     const cardTitle = document.createElement("p");
     cardTitle.innerHTML = myLibrary[numCards].title;
@@ -139,12 +151,17 @@ function createBookCard() {
     const cardPages = document.createElement("p");
     cardPages.classList.add("hidden");
     cardPages.innerHTML = myLibrary[numCards].pages + " pages";
-
+    //read
+    const cardRead = document.createElement("p");
+    cardRead.classList.add("hidden");
+    cardRead.innerHTML = myLibrary[numCards].read;
     //append
     bookLabel.appendChild(cardTitle);
     bookLabel.appendChild(cardAuthor);
     bookLabel.appendChild(cardPages);
+    bookLabel.appendChild(cardRead);
     bookCard.appendChild(bookLabel);
+    bookCard.appendChild(delBook);
     lib.appendChild(bookCard);
     spyBook();
     stopSpyBook();
@@ -168,6 +185,15 @@ function stopSpyBook() {
     })
 }
 
+function deleteBook(value) {
+    const lib = document.querySelector(".library");
+    document.querySelectorAll(".bookCard").forEach((book) => {
+        if (book.getAttribute("value") == value) {
+            lib.removeChild(book);
+            myLibrary.splice(Number(book.getAttribute("value")), 1);
+        }
+    })
+}
 stopSpyBook();
 spyBook();
 callForm();
