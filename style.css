@@ -148,6 +148,33 @@ body {
     box-shadow: inset 0px 0px 5px 2px #ea580c;
 }
 
+.data {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    justify-content: space-around;
+    background-color: #ffedd5;
+    border-radius: 12px;
+    padding: 15px;
+    margin: 20px;
+    color: #7c2d12;
+}
+
+.nb-title, .rb-title, .pr-title {
+    font-weight: bold;
+}
+
+.number-books, .read-books, .pages-read {
+    align-self: center;
+    justify-self: center;
+}
+
+.nb-number, .rb-number, .pr-number {
+    text-align: center;
+    padding: 10px;
+    font-size: 2rem;
+    font-family: "Cormorant Garamond";
+}
+
 .lib {
     grid-column: span 3;
     display: flex;
@@ -258,4 +285,5 @@ body {
 .footer {
     height: fit-content;
     text-align: center;
+    color: white;
 }

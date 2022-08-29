@@ -1,5 +1,4 @@
-let myLibrary = []; 
-let numCards = 0;
+let myLibrary = [];
 
 function Book() {
     let bookRead = "";
@@ -10,7 +9,6 @@ function Book() {
     this.title = document.getElementById("bookTitle").value;
     this.author = document.getElementById("bookAuthor").value;
     this.pages = document.getElementById("numberPages").value;
-    this.num = numCards;
     this.read = bookRead;
 }
 
@@ -18,7 +16,6 @@ function addBookToLibrary() {
     let myBook = new Book();
     myLibrary.push(myBook);
     createBookCard();
-    numCards++;
     const theForm = document.getElementById("theForm");
     const bookForm = document.querySelector(".form");
     theForm.removeChild(bookForm);
@@ -124,47 +121,54 @@ function callForm() {
 }
 
 function createBookCard() {
-    console.log(myLibrary[numCards]);
-    //library
+    //console.log(myLibrary[numCards]);
     const lib = document.querySelector(".library");
-    //book card
-    const bookCard = document.createElement("div");
-    bookCard.classList.add("bookCard");
-    bookCard.setAttribute("value", myLibrary[numCards].num);
-    //book label
-    const bookLabel = document.createElement("div");
-    bookLabel.classList.add("book-label");
-    //book delete
-    const delBook = document.createElement("button");
-    delBook.classList.add("del-book");
-    delBook.setAttribute("value", numCards);
-    delBook.setAttribute("onclick", "deleteBook(value)")
-    delBook.classList.add("hidden");
-    //title
-    const cardTitle = document.createElement("p");
-    cardTitle.innerHTML = myLibrary[numCards].title;
-    //author
-    const cardAuthor = document.createElement("p");
-    cardAuthor.classList.add("hidden");
-    cardAuthor.innerHTML = "Author: " + myLibrary[numCards].author;
-    //pages
-    const cardPages = document.createElement("p");
-    cardPages.classList.add("hidden");
-    cardPages.innerHTML = myLibrary[numCards].pages + " pages";
-    //read
-    const cardRead = document.createElement("p");
-    cardRead.classList.add("hidden");
-    cardRead.innerHTML = myLibrary[numCards].read;
-    //append
-    bookLabel.appendChild(cardTitle);
-    bookLabel.appendChild(cardAuthor);
-    bookLabel.appendChild(cardPages);
-    bookLabel.appendChild(cardRead);
-    bookCard.appendChild(bookLabel);
-    bookCard.appendChild(delBook);
-    lib.appendChild(bookCard);
+    while (lib.firstChild) {
+        lib.firstChild.remove();
+    }
+    myLibrary.forEach((book) => {
+        //library
+        const lib = document.querySelector(".library");
+        //book card
+        const bookCard = document.createElement("div");
+        bookCard.classList.add("bookCard");
+        bookCard.setAttribute("value", myLibrary.indexOf(book));
+        //book label
+        const bookLabel = document.createElement("div");
+        bookLabel.classList.add("book-label");
+        //book delete
+        const delBook = document.createElement("button");
+        delBook.classList.add("del-book");
+        delBook.setAttribute("value", myLibrary.indexOf(book));
+        delBook.setAttribute("onclick", "deleteBook(value)")
+        delBook.classList.add("hidden");
+        //title
+        const cardTitle = document.createElement("p");
+        cardTitle.innerHTML = book.title;
+        //author
+        const cardAuthor = document.createElement("p");
+        cardAuthor.classList.add("hidden");
+        cardAuthor.innerHTML = "Author: " + book.author;
+        //pages
+        const cardPages = document.createElement("p");
+        cardPages.classList.add("hidden");
+        cardPages.innerHTML = book.pages + " pages";
+        //read
+        const cardRead = document.createElement("p");
+        cardRead.classList.add("hidden");
+        cardRead.innerHTML = book.read;
+        //append
+        bookLabel.appendChild(cardTitle);
+        bookLabel.appendChild(cardAuthor);
+        bookLabel.appendChild(cardPages);
+        bookLabel.appendChild(cardRead);
+        bookCard.appendChild(bookLabel);
+        bookCard.appendChild(delBook);
+        lib.appendChild(bookCard);
+    })
     spyBook();
     stopSpyBook();
+    displayData();
 }
 
 function spyBook() {
@@ -189,11 +193,27 @@ function deleteBook(value) {
     const lib = document.querySelector(".library");
     document.querySelectorAll(".bookCard").forEach((book) => {
         if (book.getAttribute("value") == value) {
-            lib.removeChild(book);
             myLibrary.splice(Number(book.getAttribute("value")), 1);
+            createBookCard();
         }
     })
 }
+
+function displayData() {
+    let pagesRead = 0;
+    let booksRead = 0;
+    const nb = document.querySelector(".nb-number");
+    const rb = document.querySelector(".rb-number");
+    const pr = document.querySelector(".pr-number");
+
+    nb.innerHTML = myLibrary.length;
+    myLibrary.forEach((book) => {book.read == "Read" ? booksRead++ : null});
+    rb.innerHTML = booksRead;
+    myLibrary.forEach((book) => {book.read == "Read" ? pagesRead += Number(book.pages) : null})
+    pr.innerHTML = pagesRead;
+}
+
+displayData();
 stopSpyBook();
 spyBook();
 callForm();
