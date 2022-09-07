@@ -1,19 +1,26 @@
 let myLibrary = [];
 
-function Book() {
+class Book {
+    
+    constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    }
+}
+
+function addBookToLibrary() {
     let bookRead = "";
     if(document.getElementById("read").checked == false) {
         bookRead = "Unread";
     }else bookRead = "Read";
-    
-    this.title = document.getElementById("bookTitle").value;
-    this.author = document.getElementById("bookAuthor").value;
-    this.pages = document.getElementById("numberPages").value;
-    this.read = bookRead;
-}
 
-function addBookToLibrary() {
-    let myBook = new Book();
+    let title = document.getElementById("bookTitle").value;
+    let author = document.getElementById("bookAuthor").value;
+    let pages = document.getElementById("numberPages").value;
+    let read = bookRead;
+    let myBook = new Book(title, author, pages, read);
     myLibrary.push(myBook);
     createBookCard();
     const theForm = document.getElementById("theForm");

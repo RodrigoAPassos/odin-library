@@ -241,7 +241,7 @@ body {
     border: 2px solid black;
     border-radius: 26px 8px 8px 26px;
     grid-row: span 2;
-    width: 200px;
+    width: 180px;
     z-index: 1;
     position: relative;
     bottom: 150px;
